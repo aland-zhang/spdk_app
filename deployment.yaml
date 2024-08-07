@@ -25,11 +25,11 @@ spec:
               hugepages-2Mi: "2Gi"
           env:
             - name: MEM_SIZE
-              value: "2G"
-              #valueFrom:
-                #resourceFieldRef:
-                  #containerName: spdk
-                    #resource: limits.memory
+              # value: "2G"
+              valueFrom:
+                resourceFieldRef:
+                  containerName: spdk
+                    resource: limits.memory
           volumeMounts:
             - mountPath: /dev/hugepages
               name: hugepage
