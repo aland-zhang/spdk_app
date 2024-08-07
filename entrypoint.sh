@@ -4,9 +4,9 @@
 if [ -f scripts/setup.sh ]; then
     scripts/setup.sh || true
 fi
-
+MEM_SIZE_CONVERTED=$(echo "$MEM_SIZE" | sed 's/Gi/G/')
 # Start SPDK app with specified memory size
-/spdk/build/bin/nvmf_tgt --mem-size ${MEM_SIZE:-1024} --iova-mode=va &
+/spdk/build/bin/nvmf_tgt --mem-size ${MEM_SIZE_CONVERTED:-1024} --iova-mode=va &
 
 sleep 10
 

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spdk-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spdk
+  template:
+    metadata:
+      labels:
+        app: spdk
+    spec:
+      containers:
+        - name: spdk
+          image: asikrasool/spdk:v1
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "2Gi"
+              hugepages-2Mi: "2Gi"
+            requests:
+              memory: "2Gi"
+              hugepages-2Mi: "2Gi"
+          env:
+            - name: MEM_SIZE
+              value: "2G"
+              #valueFrom:
+                #resourceFieldRef:
+                  #containerName: spdk
+                    #resource: limits.memory
+          volumeMounts:
+            - mountPath: /dev/hugepages
+              name: hugepage
+      volumes:
+        - name: hugepage
+          emptyDir:
+            medium: HugePages
+
